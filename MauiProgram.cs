@@ -29,6 +29,14 @@ namespace ExpenseManager
             builder.Services.AddSingleton<SuggestedExpensePage>();
             builder.Services.AddSingleton<SuggestedExpenseViewModel>();
 
+            builder.Services.AddTransient<LogInPage>();
+            builder.Services.AddTransient<LogInViewModel>();
+            
+            builder.Services.AddTransient<SingUpPage>();
+            builder.Services.AddTransient<SingUpViewModel>();
+
+
+
             //firebase
             builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
             {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?
 <Shell
     x:Class="ExpenseManager.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -17,4 +17,9 @@
     <ShellContent Title="Gastos Sugeridos"
                   ContentTemplate="{DataTemplate local:Views.SuggestedExpensePage}"/>
 
+    <ShellContent Title="Registro"
+                  ContentTemplate="{DataTemplate local:Views.SingUpPage}"/>
+    
+    <ShellContent Title="Inicio de Sesión"
+                  ContentTemplate="{DataTemplate local:Views.LogInPage}"/>
 </Shell>
