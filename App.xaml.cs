@@ -1,6 +1,4 @@
-﻿using ExpenseManager.Views;
-
-namespace ExpenseManager
+﻿namespace ExpenseManager
 {
     public partial class App : Application
     {

@@ -25,7 +25,7 @@
                 </Frame>
             </HorizontalStackLayout>
 
-            <Button Text="Iniciar Sesión" WidthRequest="250" Margin="0, 90" Padding="0, 20"/>
+            <Button Text="Iniciar Sesión" WidthRequest="250" Margin="0, 90" Padding="0, 20" Command="{Binding LogInCommand}"/>
         </StackLayout>
     </VerticalStackLayout>
 

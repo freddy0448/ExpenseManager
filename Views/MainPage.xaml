@@ -5,5 +5,8 @@
              xmlns:views="clr-namespace:ExpenseManager.Views"
              x:DataType="viewmodels:MainViewModel"
              x:Class="ExpenseManager.MainPage">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior  IsEnabled="False" IsVisible="False"/>
+    </Shell.BackButtonBehavior>
 
 </ContentPage>

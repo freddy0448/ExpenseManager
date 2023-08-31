@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ExpenseManager.Views;
 using Firebase.Auth;
 
 namespace ExpenseManager.ViewModels
@@ -26,22 +25,22 @@ namespace ExpenseManager.ViewModels
         {
             if (string.IsNullOrEmpty(User.Password)) await Shell.Current.DisplayAlert("Mensaje", "Debe de ingresar una contraseña", "OK");
             else if (User.Password != PasswordConf) await Shell.Current.DisplayAlert("Mensaje", "La contraseña y la confirmación de contraseña son distintas", "OK");
+            else if (User.Password.Length < 6) await Shell.Current.DisplayAlert("Mensaje", "La contraseña debe de tener mínimo 6 caracteres", "OK");
             else
             {
                 try
                 {
-                    await client.CreateUserWithEmailAndPasswordAsync(User.Email, PasswordConf);
+                    var result = await client.CreateUserWithEmailAndPasswordAsync(User.Email, PasswordConf);
                     await Shell.Current.DisplayAlert("Mensaje", "Usuario registrado exitosamente", "OK");
                     User.Email = string.Empty;
                     User.Password = string.Empty;
                     PasswordConf = string.Empty;
-                    await Core.GoToPageAsync(nameof(LogInPage));
+                    await Core.GoToPageAsync(nameof(MainPage));
 
                 }
-                catch (Exception)
+                catch (FirebaseAuthException e)
                 {
-                    await Shell.Current.DisplayAlert("Mensaje", "Hubo un error a la hora de registrarlo", "OK");
-                    throw;
+                    await Shell.Current.DisplayAlert("Error", e.Reason.ToString(), "OK");
                 }
             }
         }

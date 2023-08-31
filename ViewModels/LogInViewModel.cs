@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Firebase.Auth;
-using System.Reflection.Metadata;
 
 namespace ExpenseManager.ViewModels
 {
@@ -17,24 +17,34 @@ namespace ExpenseManager.ViewModels
             _client = client;
         }
 
-
+        [RelayCommand]
         public async Task LogInAsync()
         {
-            if (string.IsNullOrEmpty(User.Email) || string.IsNullOrEmpty(User.Password))
+            if (!VerifyLogIn())
                 await Shell.Current.DisplayAlert("Mensaje", "El usuario y/o contraseña están vacios", "OK");
             else
             {
                 try
                 {
-                    await _client.SignInWithEmailAndPasswordAsync(User.Email, User.Password);
+                    var result = await _client.SignInWithEmailAndPasswordAsync(User.Email, User.Password);
                     await Core.GoToPageAsync(nameof(MainPage));
+                    User.Email = string.Empty;
+                    User.Password = string.Empty;
                 }
-                catch (Exception)
+                catch (FirebaseAuthException e)
                 {
-                    throw;
+                    await Shell.Current.DisplayAlert("Mensaje", e.Reason.ToString(), "OK");
                 }
             }
 
+        }
+
+        private bool VerifyLogIn()
+        {
+            if (string.IsNullOrEmpty(User.Email) || string.IsNullOrEmpty(User.Password))
+                return false;
+            else
+                return true;
         }
     }
 }
