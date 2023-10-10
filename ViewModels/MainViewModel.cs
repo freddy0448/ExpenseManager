@@ -1,6 +1,10 @@
-﻿namespace ExpenseManager.ViewModels
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ExpenseManager.Models;
+using System.Collections.ObjectModel;
+
+namespace ExpenseManager.ViewModels
 {
-    public class MainViewModel
+    public partial class MainViewModel : ObservableObject
     {
     }
 }

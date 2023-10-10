@@ -49,14 +49,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Platforms\Android\google-services.json" />
+	  <None Remove="Platforms\iOS\GoogleService-Info.plist" />
 	  <None Remove="Resources\Images\logo.svg" />
 	  <None Remove="Resources\Images\password.svg" />
 	  <None Remove="Resources\Images\user.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AdditionalFiles Include="Platforms\iOS\GoogleService-Info.plist" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <GoogleServicesJson Include="Platforms\Android\google-services.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-		<PackageReference Include="FirebaseAuthentication.net" Version="4.0.1" />
+		<PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.6" />
@@ -75,6 +86,19 @@
 	  <MauiXaml Update="Views\SuggestedExpensePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+	  <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common">
+	    <Version>2.6.2.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.GooglePlayServices.Base">
+	    <Version>118.2.0.2</Version>
+	  </PackageReference>
+	</ItemGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
+		<BundleResource Include="Platforms\iOS\GoogleService-Info.plist" />
 	</ItemGroup>
 
 </Project>

@@ -32,17 +32,17 @@ namespace ExpenseManager.ViewModels
                 {
                     var result = await client.CreateUserWithEmailAndPasswordAsync(User.Email, PasswordConf);
                     await Shell.Current.DisplayAlert("Mensaje", "Usuario registrado exitosamente", "OK");
-                    User.Email = string.Empty;
-                    User.Password = string.Empty;
-                    PasswordConf = string.Empty;
-                    await Core.GoToPageAsync(nameof(MainPage));
+
+                    await Core.Core.GoToPageWithUserDataAsync(nameof(MainPage), User);
 
                 }
-                catch (FirebaseAuthException e)
+                catch (Firebase.Auth.FirebaseAuthException e)
                 {
                     await Shell.Current.DisplayAlert("Error", e.Reason.ToString(), "OK");
                 }
             }
         }
+
+
     }
 }

@@ -24,6 +24,8 @@
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="FontSize" Value="16" />
             </Style>
+            <Color x:Key="DarkBackground">#000000</Color>
+            <Color x:Key="LightBackground">#FFFFFF</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

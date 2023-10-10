@@ -1,39 +1,15 @@
-﻿using ExpenseManager.Models;
-using SQLite;
-
-namespace ExpenseManager.Services
+﻿namespace ExpenseManager.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        private SQLiteAsyncConnection db;
-        private void Init()
+        public Task AddUser()
         {
-            if (db != null)
-                return;
-
-            var dataBasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "User.db");
-            db = new SQLiteAsyncConnection(dataBasePath);
-
-            db.CreateTableAsync<User>();
+            throw new NotImplementedException();
         }
 
-        public async Task<List<User>> GetUsers(User user)
+        public Task UpdateUser()
         {
-            Init();
-
-            var getResult = await db.Table<User>().ToListAsync();
-
-            return getResult;
+            throw new NotImplementedException();
         }
-
-        public async Task<int> InsertUser(User user) 
-        {
-            Init();
-
-            var result = await db.InsertAsync(user);
-            return result;
-        }
-
-
     }
 }

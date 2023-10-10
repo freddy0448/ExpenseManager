@@ -1,8 +1,10 @@
-﻿using ExpenseManager.ViewModels;
+﻿using ExpenseManager.Services;
+using ExpenseManager.ViewModels;
 using ExpenseManager.Views;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace ExpenseManager
 {
@@ -11,16 +13,13 @@ namespace ExpenseManager
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-
+            builder.UseMauiApp<App>().ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            }).UseMauiCommunityToolkit();
 #if DEBUG
-		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
@@ -28,28 +27,14 @@ namespace ExpenseManager
             builder.Services.AddSingleton<AddExpenseViewModel>();
             builder.Services.AddSingleton<SuggestedExpensePage>();
             builder.Services.AddSingleton<SuggestedExpenseViewModel>();
-
             builder.Services.AddTransient<LogInPage>();
             builder.Services.AddTransient<LogInViewModel>();
-            
             builder.Services.AddTransient<SingUpPage>();
             builder.Services.AddTransient<SingUpViewModel>();
-
-
-
+            builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IExpenseService, ExpenseService>();
             //firebase
-            builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
-            {
-                ApiKey = "AIzaSyDAYil8K3XdcP5MZKXyLnjJ-ZFUhVMJAyc",
-                AuthDomain = "expensemanager-fb00e.firebaseapp.com",
-                Providers = new FirebaseAuthProvider[]
-                {
-                    new EmailProvider()
-                }
-            })); 
-
-
-
+            builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig() { ApiKey = "AIzaSyDAYil8K3XdcP5MZKXyLnjJ-ZFUhVMJAyc", AuthDomain = "expensemanager-fb00e.firebaseapp.com", Providers = new FirebaseAuthProvider[] { new EmailProvider() } }));
             return builder.Build();
         }
     }

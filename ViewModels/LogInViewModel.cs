@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ExpenseManager.Services;
+using ExpenseManager.Views;
 using Firebase.Auth;
 
 namespace ExpenseManager.ViewModels
@@ -11,10 +13,13 @@ namespace ExpenseManager.ViewModels
         [ObservableProperty]
         Models.User user;
 
-        public LogInViewModel(FirebaseAuthClient client)
+        private IExpenseService expenseService;
+
+        public LogInViewModel(FirebaseAuthClient client, IExpenseService expenseService)
         {
             user = new Models.User();
             _client = client;
+            this.expenseService = expenseService;
         }
 
         [RelayCommand]
@@ -27,11 +32,12 @@ namespace ExpenseManager.ViewModels
                 try
                 {
                     var result = await _client.SignInWithEmailAndPasswordAsync(User.Email, User.Password);
-                    await Core.GoToPageAsync(nameof(MainPage));
+                    await expenseService.AddExpense();
+                    await Core.Core.GoToPageAsync(nameof(MainPage));
                     User.Email = string.Empty;
                     User.Password = string.Empty;
                 }
-                catch (FirebaseAuthException e)
+                catch (Firebase.Auth.FirebaseAuthException e)
                 {
                     await Shell.Current.DisplayAlert("Mensaje", e.Reason.ToString(), "OK");
                 }
@@ -45,6 +51,12 @@ namespace ExpenseManager.ViewModels
                 return false;
             else
                 return true;
+        }
+
+        [RelayCommand]
+        public async void GoToSingUp()
+        {
+            await Core.Core.GoToPageAsync(nameof(SingUpPage));
         }
     }
 }

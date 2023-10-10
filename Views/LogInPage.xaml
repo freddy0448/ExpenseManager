@@ -25,6 +25,15 @@
                 </Frame>
             </HorizontalStackLayout>
 
+            <Button Text="No tienes una cuenta? Registrate!" Command="{Binding GoToSingUpCommand}">
+                <Button.BackgroundColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="Default" Value="{StaticResource LightBackground}"/>
+                        <On Platform="Default" Value="{StaticResource DarkBackground}"/>
+                    </OnPlatform>
+                </Button.BackgroundColor>
+            </Button>
+
             <Button Text="Iniciar Sesión" WidthRequest="250" Margin="0, 90" Padding="0, 20" Command="{Binding LogInCommand}"/>
         </StackLayout>
     </VerticalStackLayout>

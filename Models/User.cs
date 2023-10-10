@@ -7,6 +7,5 @@
         public string Password { get; set; }
         public bool IsANewUser{ get; set; }
         public double Salary{ get; set; }
-        public double RemainingSalary { get; set; }
     }
 }
